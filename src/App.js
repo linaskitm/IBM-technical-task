@@ -3,17 +3,38 @@ import './App.css';
 import axios from "axios";
 import Form from './components/Form';
 import InfoDisplay from './components/InfoDisplay';
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import Alert from "@mui/material/Alert";
 
 function App() {
-  const [message, setMessage] = useState('Waiting');
+  const [message, setMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const [file, setFile] = useState("");
   const [filename, setFilename] = useState(""); 
-  const [info, setInfo] = useState([])
+  const [info, setInfo] = useState([]);
+  const [validate, setValidate] = useState(true);
+  const [refreshPage, setRefreshPage] = useState(false);
+
+  const about =
+    "Google Cloud Vision API can detect and extract information about entities in an image, upload a image and API will identify their contents";
 
 
   const onChange = (e) => {
     setFile(e.target.files[0]);
     setFilename(e.target.files[0].name);
+    const imageFile = e.target.files[0];
+    if(!imageFile)
+      setMessage("Please select image.");
+      setValidate(false)
+      
+    if(!imageFile.name.match(/\.(jpg|jpeg|png|gif)$/)){
+      setMessage("Please select valid image.");
+      setValidate(false);
+    } else {
+      setValidate(true)
+      setMessage("")
+    }
   };
 
 const postApi = "https://ibm-technical-task-api.herokuapp.com/api/post";
@@ -24,13 +45,14 @@ const postApi = "https://ibm-technical-task-api.herokuapp.com/api/post";
     formData.append("file", file);
 
     try {
-      const res = await axios.post(postApi, formData, {
+      await axios.post(postApi, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
 
-      setMessage("File Uploaded");
+      setSuccessMessage("File Uploaded");
+      setRefreshPage(true);
 
     } catch (err) {
       if (err.response.status === 500) 
@@ -50,6 +72,10 @@ const api = "https://ibm-technical-task-api.herokuapp.com/";
   } catch (error) {
     console.error(error);
   }
+  setMessage("");
+  setSuccessMessage("");
+  setFilename("");
+  setRefreshPage(false);
 }
 useEffect(() => {
 getInfo();
@@ -60,10 +86,22 @@ getInfo();
   
   return (
     <div className="App">
-      <h2>{message}</h2>
-      <Form onSubmit={onSubmit} onChange={onChange} filename={filename} />
-
-      {info && <InfoDisplay info={info} api={api} />}
+      <Container maxWidth="m">
+        <Typography variant="h6" my={5}>
+          {about}
+        </Typography>
+        <Form
+          onSubmit={onSubmit}
+          onChange={onChange}
+          filename={filename}
+          validate={validate}
+          refreshPage={refreshPage}
+          onClick={getInfo}
+        />
+        {message && <Alert severity="warning">{message}</Alert>}
+        {successMessage && <Alert severity="success">{successMessage}</Alert>}
+        {info && <InfoDisplay info={info} api={api} />}
+      </Container>
     </div>
   );
 }

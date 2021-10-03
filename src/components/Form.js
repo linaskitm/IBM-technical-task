@@ -2,7 +2,6 @@ import React from 'react'
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import Stack from "@mui/material/Stack";
 import SendIcon from "@mui/icons-material/Send";
 
 const Input = styled("input")({

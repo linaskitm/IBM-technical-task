@@ -10,6 +10,8 @@ const InfoDisplay = ({info, api}) => {
 
     const fixInfo = (param) => {
       let fixed = param.replace("[", "").replace("]", "");
+      const toArray = fixed.split("^[\\d,]+$"); 
+      console.log(toArray)
       return fixed;
     };
 

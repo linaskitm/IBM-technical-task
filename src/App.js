@@ -16,7 +16,9 @@ function App() {
 
   const about =
     "Google Cloud Vision API can detect and extract information about entities in an image, upload a image and API will identify their contents";
-
+  const api = "http://localhost:8000/";
+  const postApi = `${api}api/post`;
+  const getApi = `${api}api/get`;
 
   const onChange = (e) => {
     setFile(e.target.files[0]);
@@ -35,7 +37,6 @@ function App() {
     }
   };
 
- const postApi = "https://ibm-technical-task-api.herokuapp.com/api/post";
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -59,8 +60,8 @@ function App() {
         setMessage(err.response.data.msg);
     }
   };
- const getApi = "https://ibm-technical-task-api.herokuapp.com/api/get";
- const api = "https://ibm-technical-task-api.herokuapp.com/";
+ 
+ 
 
  const getInfo = async () => {
   try {

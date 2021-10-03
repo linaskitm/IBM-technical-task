@@ -3,9 +3,7 @@ import './App.css';
 import axios from "axios";
 import Form from './components/Form';
 import InfoDisplay from './components/InfoDisplay';
-import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
-import Alert from "@mui/material/Alert";
+import {Container, Typography, Alert} from "@mui/material";
 
 function App() {
   const [message, setMessage] = useState("");
@@ -37,7 +35,7 @@ function App() {
     }
   };
 
-const postApi = "https://ibm-technical-task-api.herokuapp.com/api/post";
+ const postApi = "https://ibm-technical-task-api.herokuapp.com/api/post";
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -61,8 +59,8 @@ const postApi = "https://ibm-technical-task-api.herokuapp.com/api/post";
         setMessage(err.response.data.msg);
     }
   };
-const getApi = "https://ibm-technical-task-api.herokuapp.com/api/get";
-const api = "https://ibm-technical-task-api.herokuapp.com/";
+ const getApi = "https://ibm-technical-task-api.herokuapp.com/api/get";
+ const api = "https://ibm-technical-task-api.herokuapp.com/";
 
  const getInfo = async () => {
   try {
@@ -76,14 +74,11 @@ const api = "https://ibm-technical-task-api.herokuapp.com/";
   setSuccessMessage("");
   setFilename("");
   setRefreshPage(false);
-}
-useEffect(() => {
-getInfo();
-},[])
+ }
+  useEffect(() => {
+  getInfo();
+  },[])
 
-
-
-  
   return (
     <div className="App">
       <Container maxWidth="m">
